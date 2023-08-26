@@ -45,8 +45,8 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         create_credentials_file: 'true'
-        workload_identity_provider: ${{ secrets.IDENTITY_WORKLOAD }}
-        service_account: id-023-08-26-github-oidc@c2023-08-26-presentation.iam.gserviceaccount.com
+        workload_identity_provider: projects/1005033819653/locations/global/workloadIdentityPools/d2023-08-26-oidc-pool /providers/github
+        service_account: oidc-service@d2023-08-26.iam.gserviceaccount.com
     
 
     - name: Upload Spring to App Engine
