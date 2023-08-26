@@ -45,7 +45,7 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         create_credentials_file: 'true'
-        workload_identity_provider: projects/1005033819653/locations/global/workloadIdentityPools/d2023-08-26-oidc-pool /providers/github
+        workload_identity_provider: projects/1005033819653/locations/global/workloadIdentityPools/d2023-08-26-oidc-pool/providers/github
         service_account: oidc-service@d2023-08-26.iam.gserviceaccount.com
     
 
@@ -53,6 +53,6 @@ jobs:
       id: deploy_gcp_spring
       uses: 'google-github-actions/deploy-appengine@v1'
       with:
-        project_id: 'c2023-08-26-presentation'
+        project_id: 'd2023-08-26'
         deliverables: app.yaml
         working_directory: autodeploy/build/libs
