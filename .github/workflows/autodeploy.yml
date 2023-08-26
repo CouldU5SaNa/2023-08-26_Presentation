@@ -1,0 +1,58 @@
+name: Spring App Engine Deploy
+run-name: Spring App Engine Deploy
+on: push
+jobs:
+  build_deploy:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout Repository
+      id: setup_repository
+      uses: actions/checkout@v3
+      with:
+        ref: development
+    
+    - name: Setup Java
+      id: setup_java
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 17
+        
+    - name: Setup Gradle
+      id: setup_gradle
+      uses: gradle/gradle-build-action@v2
+    
+    - name: Execute Gradle build
+      id: excute_build
+      run: 
+        cd autodeploy;
+        ./gradlew build;
+
+    - name: Move file of YAML
+      id: move_yamle
+      run: 
+        mv app.yaml autodeploy/build/libs;
+
+    - name: Get Certification from GCP
+      id: setup_gcp_auth
+      uses: 'google-github-actions/auth@v1'
+      with:
+        create_credentials_file: 'true'
+        workload_identity_provider: ${{ secrets.IDENTITY_WORKLOAD }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
+    
+
+    - name: Upload Spring to App Engine
+      id: deploy_gcp_spring
+      uses: 'google-github-actions/deploy-appengine@v1'
+      with:
+        project_id: 'c2023-08-26-presentation'
+        deliverables: app.yaml dispatch.yaml
+        working_directory: autodeploy/build/libs
