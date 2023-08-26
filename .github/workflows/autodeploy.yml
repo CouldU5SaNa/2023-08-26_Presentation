@@ -54,5 +54,5 @@ jobs:
       uses: 'google-github-actions/deploy-appengine@v1'
       with:
         project_id: 'c2023-08-26-presentation'
-        deliverables: app.yaml dispatch.yaml
+        deliverables: app.yaml
         working_directory: autodeploy/build/libs
