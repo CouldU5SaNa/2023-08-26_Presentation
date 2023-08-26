@@ -16,7 +16,7 @@ jobs:
       id: setup_repository
       uses: actions/checkout@v3
       with:
-        ref: development
+        ref: main
     
     - name: Setup Java
       id: setup_java
